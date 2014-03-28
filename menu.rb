@@ -46,12 +46,12 @@ class Menu
   end
 
   def edit_contact
-    id = gather_data("Contact ID")
+    id = gather_data("Contact ID").to_i
     printable = []
     INFO.each_with_index {|x,i| printable << "#{i}. #{x}"}
-    info_type = gather_data("number of the attribue you want to change\n#{printable}")
+    info_type = gather_data("number of the attribue you want to change\n#{printable}").to_i
     new_info = gather_data("new value you want for the #{INFO[0]}")
-    @system.edit_contact(id, info_type, info_type)
+    @system.edit_contact(id, info_type, new_info)
   end
 
   def show_one_contact
