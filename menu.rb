@@ -2,7 +2,7 @@ require './system'
 require './info'
 
 class Menu
-  
+  INFO = ["First Name", "Last Name", "Email", "Notes"]
   def initialize()
      @system = System.new
   end
@@ -40,13 +40,23 @@ class Menu
   end
 
   def add_contact
-    contact_info = ["First Name", "Last Name", "Email", "Notes"]
+    contact_info = INFO
     info = contact_info.map {|x| gather_data(x)}
     @system.add_contact(info) 
   end
 
+  def edit_contact
+    id = gather_data("Contact ID")
+    printable = []
+    INFO.each_with_index {|x,i| printable << "#{i}. #{x}"}
+    info_type = gather_data("number of the attribue you want to change\n#{printable}")
+    new_info = gather_data("new value you want for the #{INFO[0]}")
+    @system.edit_contact(id, info_type, info_type)
+  end
+
   def show_one_contact
-    puts "SHow one"
+    id = gather_data("Contact ID")
+    @system.show_one_contact(ID)
   end
 
   def show_all
@@ -63,9 +73,11 @@ class Menu
       if input == 1
         add_contact
       elsif input == 2
-        show_one_contact
+        edit_contact
       elsif input ==3
        show_all
+     elsif input ==4
+       show_one_contact
       elsif input == 7
         done = true
       end
