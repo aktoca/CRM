@@ -16,9 +16,6 @@ class System
 
   def edit_contact(id, info_type, new_info)
     puts "here is the info: "
-    puts id
-    puts info_type
-    puts new_info
     @contacts.each do |contact|
       if contact.id == id
         if info_type == 0
@@ -31,7 +28,7 @@ class System
           contact.notes = new_info
         end
       puts new_info
-      
+
       else
         puts "Unable to find that Contact"
       end
@@ -42,6 +39,15 @@ class System
     @contacts.each do |contact|
       puts contact.to_s
     end
+  end
+
+  def show_one_contact(id)
+    @contacts.each do |contact|
+      if contact.id == id
+        puts contact.to_s
+      end
+    end
+
   end
 
 end
