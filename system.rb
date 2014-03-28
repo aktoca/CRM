@@ -47,7 +47,20 @@ class System
         puts contact.to_s
       end
     end
+  end
 
+  def contacts_by_attr(info_type)
+    @contacts.each do |contact|
+        if info_type == 0
+         puts contact.first_name
+        elsif info_type == 1
+          puts contact.last_name
+        elsif info_type == 2
+          puts contact.email
+        elsif info_type == 3
+          puts contact.notes
+        end
+      end
   end
 
 end

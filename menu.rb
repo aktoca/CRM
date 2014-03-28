@@ -66,6 +66,17 @@ class Menu
     @system.show_one_contact(id)
   end
 
+  def contacts_by_attr
+    printable = []
+    INFO.each_with_index {|x,i| printable << "#{i}. #{x}"}
+    info_type = gather_data("number of the attribues you want to view\n#{printable}").to_i
+    @system.contacts_by_attr(info_type)
+    
+  end
+
+  def delete_contact
+  end
+
   def run
     done = false
     while !done
@@ -77,10 +88,14 @@ class Menu
       elsif input == 2
         edit_contact
       elsif input ==3
-       show_all
-     elsif input ==4
-       show_one_contact
-      elsif input == 7
+         show_all
+       elsif input ==4
+         show_one_contact
+       elsif input == 5
+         contacts_by_attr
+       elsif input == 6
+         delete_contact     
+       elsif input == 7
         done = true
       end
     end
