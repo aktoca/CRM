@@ -8,8 +8,14 @@ class Menu
   end
 
   def contact_info
-    puts "first name, last name, email, notes"
-    "John"
+    cust_atts = []
+    puts "Enter with new lines: first name, last name, email, notes"
+    4.times do
+      info = gets.chomp
+      cust_atts << info
+    end
+    puts cust_atts
+    cust_atts
   end
 
 
