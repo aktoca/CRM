@@ -7,15 +7,23 @@ class Menu
      @system = System.new
   end
 
-  def contact_info
-    cust_atts = []
-    puts "Enter with new lines: first name, last name, email, notes"
-    4.times do
-      info = gets.chomp
-      cust_atts << info
-    end
-    puts cust_atts
-    cust_atts
+  def gather_data(type)
+    puts "Please enter the #{type}:"
+    gets.chomp
+  end
+
+  def contact_menu
+    puts "1. ID"
+    puts "2. First name"
+    puts "3. Last name"
+    puts "4. Email"
+    puts "5. Notes"
+  end
+
+  def add_contact_first
+    #is it better for individual or array passing
+    first_name = gather_data("first name")
+    @system.add_contact(first_name)  #CALL THE INSANCE VAR OF THE NEW db
   end
 
 
@@ -32,10 +40,18 @@ class Menu
   end
 
   def add_contact
-    puts "Add a Contact"
-    puts "please enter contact information"
-    input = contact_info
-    @system.add_contact(input)
+    contact_info = ["First Name", "Last Name", "Email", "Notes"]
+    info = contact_info.map {|x| gather_data(x)}
+    @system.add_contact(info) 
+  end
+
+  def show_one_contact
+    puts "SHow one"
+  end
+
+  def show_all
+    puts "Display all contacts"
+    @system.show_all
   end
 
   def run
@@ -46,6 +62,10 @@ class Menu
       input = gets.chomp.to_i
       if input == 1
         add_contact
+      elsif input == 2
+        show_one_contact
+      elsif input ==3
+       show_all
       elsif input == 7
         done = true
       end
