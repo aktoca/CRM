@@ -2,7 +2,8 @@ require './system'
 require './info'
 
 class Menu
-  INFO = ["First Name", "Last Name", "Email", "Notes"]
+  INFO = ["ID", "First Name", "Last Name", "Email", "Notes"]
+  
   def initialize()
      @system = System.new
   end
@@ -20,17 +21,13 @@ class Menu
   end
 
   def field_menu
-    puts "1. ID"
-    puts "2. First name"
-    puts "3. Last name"
-    puts "4. Email"
-    puts "5. Notes"
+    INFO.each_with_index {|x, i| puts "#{i+1}. #{x}"}
   end
 
   def get_field
-    puts "Customer Attribute Fields:"
-    puts field_menu.to_s
-    gather_data("number of the attribute").to_i
+    puts "--------Customer Attributes------"
+    field_menu
+    gather_data("number of the attribute")
   end
 
   def gather_data(type)
@@ -45,41 +42,54 @@ class Menu
   end
 
   def add_contact
-    contact_info = INFO
+    puts "Add a Contact"
+    contact_info = INFO[1..4]
     info = contact_info.map {|x| gather_data(x)}
     @system.add_contact(info) 
+    puts "\e[H\e[2J"
+    puts "\n*** Contact Added\n"
   end
 
-  def edit_contact
-    info_type = get_field
-    puts "Current Contact Information"
-    new_info = gather_data("new value you want")
-    @system.edit_contact(info_type, new_info)
+  def modify_contact    
+    puts "--------\nModify a Contact\n------"
+    info_type = get_field.to_s
+    who = gather_data("contact you want to change (by attribute)")
+    puts "Current Contact Information:"
+    @system.display_partipular_contacts(info_type,who) 
+    new_info = gather_data("new value you want for the attribute")
+    @system.modify_contact(info_type, new_info,who) 
+    confirm? ? (puts "Contact Updated") : (puts "Edit canceled")
+
   end
 
-  def show_all
-    puts "Display all contacts"
-    @system.show_all
+  def display_all_contacts
+    puts "----------\nAll contacts\n----------"
+    @system.display_all_contacts
   end
 
-  def show_one_contact
+  def display_partipular_contacts
     puts "Display One Contact"
     info_type = get_field
-    @system.show_one_contact(info_type)
+    who = gather_data("contact you want to display")
+    puts
+    @system.display_partipular_contacts(info_type, who)
   end
 
-  def contacts_by_attr
-    puts 
-    info_type =  get_field
-    puts "You are viewing contacts by #{INFO[info_type]}"
-    @system.contacts_by_attr(info_type)
+  def display_info_by_attribute
+    info_type = get_field
+    puts
+    puts "======\nContacts by #{INFO[info_type.to_i - 1]}\n======="
+    @system.display_info_by_attribute(info_type)
   end
 
   def delete_contact
     info_type = get_field
+    who = gather_data("contact you want to remove")
     puts "This is the contact you are deleting:" 
-    @system.show_one_contact(info_type)
-    @system.delete_contact(id)
+    @system.display_partipular_contacts(info_type,who)
+    confirm? ? (puts "Contact Deleted") : (puts "Delete canceled")
+    @system.delete_contact(info_type,who)
+    puts "\e[H\e[2J"
   end
 
   def run
@@ -87,20 +97,20 @@ class Menu
     while !done
       main_menu
       print "\n>> " 
-      input = gets.chomp.to_i
-      if input == 1
+      input = gets.chomp.downcase
+      if input == '1' || input == 'add'
         add_contact
-      elsif input == 2
-        edit_contact
-      elsif input ==3
-         show_all
-       elsif input ==4
-         show_one_contact
-       elsif input == 5
-         contacts_by_attr
-       elsif input == 6
-         delete_contact     
-       elsif input == 7
+      elsif input == '2' || input == 'modify'
+        modify_contact
+      elsif input == '3' || input == 'display all'
+         display_all_contacts
+      elsif input == '4' || input == 'display contact'
+         display_partipular_contacts
+      elsif input == '5' || input == 'display attribute'
+         display_info_by_attribute
+      elsif input == '6' || input == 'delete'
+         delete_contact      
+      elsif input == '7' || input == 'exit'
         done = true
       end
     end
