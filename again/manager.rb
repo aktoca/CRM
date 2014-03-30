@@ -14,13 +14,13 @@ class Manager
   def tally(guess,actual)
     if guess == actual
       points = 2 
-    elsif (guess <= actual + 2) || (guess >= actual -2)
+    elsif (guess <= actual + 2) && (guess >= actual -2)
       points = 1 
     else
-      points = 0 if (guess < actual)
+      points = 0
     end
     @score.add_the_points(guess,actual,points)
-    guess <=> actual
+    points
   end
 
   def change_points(new)
@@ -31,8 +31,7 @@ class Manager
   def finalize
     @stuff << @score.points
     @score.finalize
-    puts @stuff
-    
+
   end
 
   def display_name
@@ -41,6 +40,7 @@ class Manager
 
   def score_board
     puts @score.score_board
+    puts @stuff.
   end
 
 

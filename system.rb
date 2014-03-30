@@ -5,11 +5,7 @@ class System
 
   def add_contact(input)
     #input given as array 
-    new_contact = Info.new
-    new_contact.first_name = input[0] 
-    new_contact.last_name = input[1]
-    new_contact.email = input[2]
-    new_contact.notes = input[3]
+    new_contact = Info.new(input)
     @contacts << new_contact
   end
 

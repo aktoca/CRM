@@ -3,8 +3,13 @@ class Info
 
   attr_accessor :first_name, :last_name, :email, :notes, :id
 
-  def initialize
+  def initialize(contact_info)
+
     @id = Info.get_id
+    @first_name = contact_info[0]
+    @last_name = contact_info[1]
+    @email = contact_info[2]
+    @notes = contact_info[3]
   end
 
   def to_s

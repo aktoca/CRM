@@ -1,23 +1,28 @@
 class Score
-  attr_accessor :name, :result, :points, :total_points
+  @@total_points = 0
+  attr_accessor :name, :points, :total_points, :games_played
 
   def initialize
-    @@points = 0
+    @points = 0
     @guess = 0
     @actual =0
-    @total_points = 0
+    @games_played = 0
+
   end
   
   def add_the_points(guess,actual,points)
     @guess = guess
     @actual = actual
-    @@points += points
+    @points += points
   end
 
   def finalize
-    @@total_points = @@points
-    @@points = 0
-    puts score_board
+    @games_played += 1
+    puts "For this round you got this many points:"
+    puts @points
+    @@total_points += @points
+    @points = 0
+    puts  
   end
 
 
@@ -27,7 +32,7 @@ class Score
   end
 
   def score_board
-    puts "#{name}\nPoints: #{@@total_points}\n"
+    puts "#{name}\nNumber of Games Played: #{games_played}\nPoints: #{@@total_points}\n"
   end
 
 
